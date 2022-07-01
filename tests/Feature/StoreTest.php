@@ -24,4 +24,16 @@ class StoreTest extends TestCase
         $response->assertViewHas("products"); //Variable en la vista
         $response->assertStatus(200);
     }
+
+    public function test_store_show_product()
+    {
+        //$this->withoutExceptionHandling();
+        $product=Product::first();
+        $response = $this->get("products/".$product->id);
+        $response->assertViewIs("store.show");// Vista store
+        $response->assertSee("Products"); //Vista contiene la palabra
+        $response->assertViewHas("product"); //Variable en la vista
+        $response->assertStatus(200);
+        $this->assertEquals(number_format($product->price,2),'26.00');
+    }
 }

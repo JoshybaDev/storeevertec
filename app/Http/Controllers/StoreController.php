@@ -12,4 +12,9 @@ class StoreController extends Controller
         $products = Product::all();
         return view('store.store',compact('products'));
     }
+    public function show($id)
+    {
+        $product=Product::find($id);
+        return view('store.show',compact('product'));
+    }
 }

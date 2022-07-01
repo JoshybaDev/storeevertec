@@ -15,15 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\StoreController::class, 'index'])->name('store');
 Route::get('/products', [App\Http\Controllers\StoreController::class, 'index'])->name('products');
+Route::get('/products/{id}', [App\Http\Controllers\StoreController::class, 'show'])->name('productsshow');
+
+
+
 
 Route::get('/cart', function () {
     return view('welcome');
 })->name('cart');
-
 Route::get('/about', function () {
     return view('about.about');
 })->name('about');
-
-
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
