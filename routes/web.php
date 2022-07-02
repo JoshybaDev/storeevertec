@@ -17,12 +17,12 @@ Route::get('/', [App\Http\Controllers\StoreController::class, 'index'])->name('s
 Route::get('/products', [App\Http\Controllers\StoreController::class, 'index'])->name('products');
 Route::get('/products/{id}', [App\Http\Controllers\StoreController::class, 'show'])->name('productsshow');
 
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+Route::post('/cart', [App\Http\Controllers\CartController::class, 'cartAdd'])->name('cartAdd');
+Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'cartDel'])->name('cartDel');
 
 
 
-Route::get('/cart', function () {
-    return view('welcome');
-})->name('cart');
 Route::get('/about', function () {
     return view('about.about');
 })->name('about');

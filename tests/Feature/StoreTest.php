@@ -36,4 +36,12 @@ class StoreTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(number_format($product->price,2),'26.00');
     }
+    public function test_store_show_product_no_found()
+    {
+        $this->get("products/10000")
+        ->assertRedirect('products')
+        ->assertSessionHasErrors([
+            'product_id'=>'The product no found',
+        ]);
+    }
 }

@@ -7,6 +7,7 @@
     @include('store.header')
 @endsection
 @section('content')
+    @include("layouts.errors")
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-4 text-center fw-bold">
@@ -15,12 +16,13 @@
 
             <h4>${{ number_format($product->price, 2) }}</h4>
             <br>
-            <form action="cart" method="post" class="fs-base mx-2" style="display: inline">
-                <input type="hidden" name="idprodcut" value="{{ $product->id }}">
+            <form action="{{route('cart')}}" method="post" class="fs-base mx-2" style="display: inline">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <button class="btn btn-primary" alt="add cart">ADD TO CART</button>
             </form>
             <br><br>
-            <a href="{{route('products')}}" class="btn btn-danger">BACK PRODUCTS</a>
+            <a href="{{ route('products') }}" class="btn btn-danger">BACK PRODUCTS</a>
         </div>
         <div class="col-lg-5">
             <img src="{{ url('img/products/01.jpg') }}" alt="" width="80%" height="80%" class="rounded">
