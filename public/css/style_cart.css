@@ -1,11 +1,6 @@
+@import 'borders.css';
 @media (min-width: 1280px) {
     .cartcontainer {
         max-width: 1000px;
     }
-}
-.border-start {
-    border-left: 1px solid #e3e9ef !important;
-}
-.border-bootom {
-    border-bottom: 1px solid #e3e9ef !important;
 }

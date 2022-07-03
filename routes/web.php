@@ -21,10 +21,17 @@ Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name
 Route::post('/cart', [App\Http\Controllers\CartController::class, 'cartAdd'])->name('cartAdd');
 Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'cartDel'])->name('cartDel');
 
-
+Route::get('/checkout1', [App\Http\Controllers\CheckOutController::class, 'index'])->name('checkout1');
+Route::post('/checkout2', [App\Http\Controllers\CheckOutController::class, 'store'])->name('checkout2');
+Route::get('/checkout3/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'direction'])->name('checkout3');
+Route::post('/checkout4/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'storeDirection'])->name('checkout4');
+Route::post('/checkout4_5/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'selectDirection'])->name('checkout4_5');
+Route::get('/checkout5/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'checkoutpay'])->name('checkout5');
 
 Route::get('/about', function () {
     return view('about.about');
 })->name('about');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/installation_system_full_30062020', [App\Http\Controllers\InstallController::class, 'index'])->name('install');

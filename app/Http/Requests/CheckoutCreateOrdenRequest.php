@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Services\UserServices;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CartAddItemRequest extends FormRequest
+class CheckoutCreateOrdenRequest extends FormRequest
 {
-    protected $redirectRoute = 'cart';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,6 +14,7 @@ class CartAddItemRequest extends FormRequest
      */
     public function authorize()
     {
+        $id = UserServices::currentUserIdIsValid($this->user_id);
         return true;
     }
 
@@ -25,7 +26,10 @@ class CartAddItemRequest extends FormRequest
     public function rules()
     {
         return [
-            "product_id" => 'required|exists:products,id'
+            'user_id' => 'required|integer|min:0',
+            'user_name' => 'required|string|max:80',
+            'user_mobile' => 'required|string|max:40',
+            'user_email' => 'required|string|max:120',
         ];
     }
 }

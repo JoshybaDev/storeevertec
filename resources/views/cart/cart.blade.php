@@ -2,7 +2,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ url('css/style_store.css') }}">
     <link rel="stylesheet" href="{{ url('css/style_cart.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">    
 @endsection
 @section('head')
     @include('store.header')
@@ -12,7 +12,12 @@
         <div class="container cartcontainer mb-5 pb-3">
             <div class="card">
                 <div class="card-body">
-                    @include("layouts.errors")                    
+                    @include("layouts.errors")     
+                    <div class="row mb-3">
+                        <div class="col-lg-12 text-center">
+                            <span class="fw-bold fs-4">Your Cart</span>
+                        </div>
+                    </div>                                   
                     <div class="row">
                         <div class="col-lg-8">
                             @foreach ($items as $item)
@@ -47,7 +52,7 @@
                         <div class="col-lg-4 text-center border-start">
                             Subtotal &nbsp;&nbsp; <span class="fw-bold fs-3">${{ number_format($total, 2) }}</span>
                             <br><br>
-                            <button class="btn btn-dark">CHECKOUT</button>
+                                <a href="{{route('checkout1')}}" class="btn btn-dark">CHECKOUT</a>
                             <br>
                             <a href="{{ route('products') }}">Continue Shopping</a>
                         </div>

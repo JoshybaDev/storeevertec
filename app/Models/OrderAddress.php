@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderAddress extends Model
 {
-    use HasFactory;
+    use HasFactory; 
+    protected $fillable = [
+        'order_id',
+        'street',
+        'city',
+        'state',
+        'zipcode'
+    ];       
 }

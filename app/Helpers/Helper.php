@@ -2,9 +2,18 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
 class Helper
 {
-    public static function randomLetters($lengt = 8)
+    /**
+     * Function create randomletter
+     *
+     * @param integer $lengt
+     * @return void
+     */
+    public static function randomLetters(int $lengt = 8): string
     {
         # code...
         $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
@@ -15,5 +24,31 @@ class Helper
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string        
+    }
+    /**
+     * Create a product manually, factory no work with sqlite
+     *
+     * @return void
+     */
+    public static function create_a_product_manually(): void
+    {
+        DB::table('products')->insert([
+            'name' => 'Producto ' . rand(0, 100),
+            'price' => rand(0, 100),
+            'created_at' => date('Ymd'),
+            'updated_at' => date('Ymd')
+        ]);
+    }
+    public static function create_user_anonymus(): void
+    {
+        User::create([
+            'name' => 'anonymous',
+            'email' => 'anonymous@storeevertec.com',
+            'password' => bcrypt('anonymous'),
+            'mobile' => '9612568479'
+        ]);
+        User::where('id', '=', '1')->update([
+            'id' => 0
+        ]);        
     }
 }
