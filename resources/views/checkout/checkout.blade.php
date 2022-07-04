@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','Checkout')
 @section('css')
     <link rel="stylesheet" href="{{ url('css/borders.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">

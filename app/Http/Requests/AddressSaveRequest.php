@@ -14,8 +14,7 @@ class AddressSaveRequest extends FormRequest
      */
     public function authorize()
     {
-        $id = UserServices::currentUserIdIsValid($this->user_id);
-        return true;
+        return UserServices::currentUserIdIsValid($this->user_id);
     }
 
     /**

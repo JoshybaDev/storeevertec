@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('order_details', function (Blueprint $table) {
-            $table->string('name',250);
+            $table->string('name', 250);
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('order_details', function (Blueprint $table) {
-            //
+            $table->dropColumn('name');
         });
     }
 };

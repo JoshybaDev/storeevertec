@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         // DB::table('products')->truncate();
         // DB::statement('SET FOREIGN_KEY_CHECKS = 1;'); // Reactivamos la revisión de claves foráneas
         $this->call(ProductSeeder::class);
+        $this->call(PackageSeeder::class);
     }
 }

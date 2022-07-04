@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','Address')
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">
     <link rel="stylesheet" href="{{ url('css/tooltip.css') }}">
@@ -30,9 +31,10 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="{{ route('checkout2') }}" method="post">
+                        <form action="{{ route('checkout4') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user['user_id'] }}">
+                            <input type="hidden" name="codeunique" value="{{ $codeunique }}">
                             <div class="row mb-3">
                                 <div class="col-lg-12 text-center">
                                     <hr><span class="fw-bold fs-4">Shipping address</span>
@@ -47,7 +49,7 @@
                                 <div class="col-lg-6"><input type="text" name="city" id="city"
                                         class="form-control" required placeholder="City" value="" maxlength="40" required>
                                 </div>
-                                <div class="col-lg-6"><input type="estate" name="estate" id="state"
+                                <div class="col-lg-6"><input type="state" name="state" id="state"
                                         class="form-control" required placeholder="State" maxlength="120" required></div>
                             </div>
                             <div class="row mb-2">

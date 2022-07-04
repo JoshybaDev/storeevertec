@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -14,7 +15,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->integer("user_address_id");
+            $table->decimal('taxes', 18, 2)->default(0.00);
+            $table->decimal('shipping', 18, 2)->default(0.00);
+            $table->decimal('shipping_discount', 18, 2)->default(0.00);
+            $table->dateTime('vigency')->nullable();
         });
     }
 
@@ -26,7 +30,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('user_address_id');
+            $table->dropColumn('taxes', 'shipping', 'shipping_discount', 'vigency');
         });
     }
 };

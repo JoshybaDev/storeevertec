@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("customer_name",200);
             $table->string("customer_email",250);
             $table->string('customer_mobile',15);
-            $table->enum('status',['CREATED','PAYED,REJECTED'])->default('CREATED');
+            $table->string('status',15)->default('CREATED');
             $table->decimal('cant',18,2);
             $table->decimal('total',18,2);
             $table->timestamps();

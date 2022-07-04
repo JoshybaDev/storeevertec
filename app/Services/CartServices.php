@@ -11,7 +11,7 @@ final class CartServices
      *
      * @return array
      */
-    public static function cart_items(): array
+    public static function cartItems(): array
     {
         return session()->get('cart_items') ?? [];
     }
@@ -20,7 +20,7 @@ final class CartServices
      *
      * @return integer
      */
-    public static function cart_mount_total(): int
+    public static function cartMountTotal(): int
     {
         return session()->get('cart_total') ?? 0;
     }
@@ -29,7 +29,7 @@ final class CartServices
      *
      * @return integer
      */
-    public static function cart_products_total(): int
+    public static function cartProductsTotal(): int
     {
         return session()->get('cart_products_total') ?? 0;
     }    
@@ -39,11 +39,11 @@ final class CartServices
      * @param Product $product
      * @return void
      */
-    public static function cart_add_items(Product $product)
+    public static function cartAddItems(Product $product)
     {
-        $items = self::cart_items();
-        $total = self::cart_mount_total();
-        $products_total = self::cart_products_total();
+        $items = self::cartItems();
+        $total = self::cartMountTotal();
+        $productsTotal = self::cartProductsTotal();
         $item = [
             "product_id" => $product->id,
             "product_cant" => 1,
@@ -53,10 +53,10 @@ final class CartServices
         ];
         array_push($items, $item);
         $total += $product->price * 1;
-        $products_total += 1;
+        $productsTotal += 1;
         session()->put('cart_items', $items);
         session()->put('cart_total', $total);
-        session()->put('cart_products_total', $products_total);
+        session()->put('cart_products_total', $productsTotal);
     }
     /**
      * Delete from session the items and update total
@@ -64,14 +64,14 @@ final class CartServices
      * @param [int] $product_id
      * @return void
      */
-    public static function cart_del_item(int $product_id): void
+    public static function cartDelItem(int $productId): void
     {
-        $items = self::cart_items();
+        $items = self::cartItems();
         $total = 0;
-        $products_total =0;
+        $productsTotal =0;
         //dd($items,$product_id);
         foreach ($items as $key => $item) {
-            if ($item["product_id"] == $product_id) {
+            if ($item["product_id"] == $productId) {
                 unset($items[$key]);
                 break;
             }
@@ -79,11 +79,11 @@ final class CartServices
         $items = array_values($items);
         foreach ($items as $key => $item) {
             $total += $item["product_price"];
-            $products_total += 1;
+            $productsTotal += 1;
         }
         session()->put('cart_items', $items);
         session()->put('cart_total', $total);
-        session()->put('cart_products_total', $products_total);
+        session()->put('cart_products_total', $productsTotal);
     }
     /**
      * Empty cart

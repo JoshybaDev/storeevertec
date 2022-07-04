@@ -17,8 +17,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $items = CartServices::cart_items();
-        $total = CartServices::cart_mount_total();
+        $items = CartServices::cartItems();
+        $total = CartServices::cartMountTotal();
         return view('cart.cart',compact('items','total'));
     }
     /**
@@ -32,7 +32,7 @@ class CartController extends Controller
         $validated = $request->validated();
         $product_id=$request->product_id;
         $product=Product::find($product_id);
-        CartServices::cart_add_items($product);
+        CartServices::cartAddItems($product);
         return redirect()->route('cart');
     }
     /**
@@ -45,7 +45,7 @@ class CartController extends Controller
     {
         $validated = $request->validated();
         $product_id=$request->product_id;
-        CartServices::cart_del_item($product_id);
+        CartServices::cartDelItem($product_id);
         return redirect()->route('cart');        
     }
 }

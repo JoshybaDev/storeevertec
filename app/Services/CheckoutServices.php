@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Models\OrderAddress;
 use App\Models\OrderDetail;
+use App\Models\OrderPackage;
 use Illuminate\Support\Str;
 
 final class CheckoutServices
@@ -14,17 +16,17 @@ final class CheckoutServices
      * @param [array] $dataClient
      * @return void
      */
-    public static function create_order_with_items(array $dataClient): string
+    public static function createOrderWithItems(array $dataClient): string
     {
-        $codigoUnique = self::get_not_exists_codebuy_in_order();
-        $items = CartServices::cart_items();
+        $codigoUnique = self::getNotExistsCodebuyInOrder();
+        $items = CartServices::cartItems();
         if (empty($items)) {
             return 'NoValidCode_EmptyProducts';
         }
-        $total = CartServices::cart_mount_total();
-        $products_total = CartServices::cart_products_total();
-        $id = self::create_order($codigoUnique, $dataClient, $products_total, $total);
-        self::create_order_details($id, $items);
+        $total = CartServices::cartMountTotal();
+        $products_total = CartServices::cartProductsTotal();
+        $id = self::createOrder($codigoUnique, $dataClient, $products_total, $total);
+        self::createOrderDetails($id, $items);
         return Order::find($id)->codebuy;
     }
     /**
@@ -32,13 +34,13 @@ final class CheckoutServices
      *
      * @return string
      */
-    public static function get_not_exists_codebuy_in_order(): string
+    public static function getNotExistsCodebuyInOrder(): string
     {
         $codigoUnique = Str::random(20);
-        if (self::verify_codebuy_not_exists_in_an_order($codigoUnique)) {
+        if (self::verifyCodebuyNotExistsInAnOrder($codigoUnique)) {
             return $codigoUnique;
         } else {
-            self::get_not_exists_codebuy_in_order();
+            self::getNotExistsCodebuyInOrder();
         }
     }
     /**
@@ -47,11 +49,10 @@ final class CheckoutServices
      * @param [string] $codigoUnique
      * @return bool
      */
-    public static function verify_codebuy_not_exists_in_an_order($codigoUnique): bool
+    public static function verifyCodebuyNotExistsInAnOrder($codigoUnique): bool
     {
-        $order = Order::where('codebuy', '=', $codigoUnique)->get();
-        //dd($order[0]['codebuy']);
-        return empty($order[0]);
+        $order = Order::where('codebuy', '=', $codigoUnique)->select('id')->get();
+        return $order->isEmpty();
     }
     /**
      * Create order
@@ -62,7 +63,7 @@ final class CheckoutServices
      * @param float $total
      * @return integer order_id
      */
-    private static function create_order(string $codigoUnique, array $dataClient, float $products_total, float $total): int
+    private static function createOrder(string $codigoUnique, array $dataClient, float $products_total, float $total): int
     {
         return Order::create([
             'user_id' => $dataClient["user_id"],
@@ -82,7 +83,7 @@ final class CheckoutServices
      * @param array $items
      * @return void
      */
-    private static function create_order_details(int $id, array $items): void
+    private static function createOrderDetails(int $id, array $items): void
     {
         foreach ($items as $key => $item) {
             OrderDetail::create([
@@ -92,11 +93,72 @@ final class CheckoutServices
                 'cant' => $item['product_cant'],
                 'subtotal' => $item['product_subtotal'],
                 'name' => $item['product_name'],
-            ]);           
+            ]);
         }
     }
-    public static function SaveAddressAnonymus(array $DataAddress)
+    /**
+     * Save address your user anonymus
+     *
+     * @param array $DataAddress
+     * @return void
+     */
+    public static function saveAddressAnonymus(array $DataAddress): void
     {
-
+        $order_id = Order::where('codebuy', '=', $DataAddress['codeunique'])
+            ->select('id')
+            ->get()[0]['id'];
+        OrderAddress::create([
+            'order_id' => $order_id,
+            'street' => $DataAddress['street'],
+            'city' => $DataAddress['city'],
+            'state' => $DataAddress['state'],
+            'zipcode' => $DataAddress['zipcode'],
+        ]);
+    }
+    /**
+     * Full verify empty feature order
+     *
+     * @param integer $orderId
+     * @param string $orderStatus
+     * @param string $codeunique
+     * @return void
+     */
+    public static function verifyEmptiesOrder(int $orderId, string $codeunique)
+    {
+        if(self::verifyCheckout3AddressEmpty($orderId)){
+            return redirect()->route('checkout3', ['codeunique' => $codeunique]);
+        }
+        if(self::verifyCheckout3PackagesEmpty($orderId)){
+            return redirect()->route('checkout5', ['codeunique' => $codeunique]);
+        }
+        return redirect()->route('checkout7', ['codeunique' => $codeunique]);
+    }
+    /**
+     * Verify if Packages of order is empty
+     *
+     * @param [type] $orderId
+     * @return boolean
+     */
+    public static function verifyCheckout3PackagesEmpty($orderId): bool
+    {
+        $orderPackagesId = OrderPackage::where('order_id', '=', $orderId)->get();
+        if ($orderPackagesId->isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Verify if Address of order is empty
+     *
+     * @param integer $orderId
+     * @return boolean
+     */
+    public static function verifyCheckout3AddressEmpty(int $orderId): bool
+    {
+        $orderDeatilsId = OrderAddress::where('order_id', '=', $orderId)->select('id')->get();
+        if ($orderDeatilsId->isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }
