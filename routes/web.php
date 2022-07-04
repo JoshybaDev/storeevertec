@@ -23,14 +23,17 @@ Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'cartDe
 
 Route::get('/checkout1', [App\Http\Controllers\CheckOutController::class, 'index'])->name('checkout1');
 Route::post('/checkout2', [App\Http\Controllers\CheckOutController::class, 'store'])->name('checkout2');
+Route::get('/checkout3', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkout3Empty');
 Route::get('/checkout3/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'direction'])->name('checkout3');
 Route::post('/checkout4', [App\Http\Controllers\CheckOutController::class, 'storeDirection'])->name('checkout4');
-Route::post('/checkout4_5/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'selectDirection'])->name('checkout4_5');
+Route::post('/checkout4_5', [App\Http\Controllers\CheckOutController::class, 'selectDirection'])->name('checkout4_5');
+Route::get('/checkout5', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkout5Empty');
 Route::get('/checkout5/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'shipping'])->name('checkout5');
-Route::post('/checkout6/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'shippingSave'])->name('checkout6');
+Route::post('/checkout6', [App\Http\Controllers\CheckOutController::class, 'shippingSave'])->name('checkout6');
+Route::get('/checkout7', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkout7Empty');
 Route::get('/checkout7/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'checkoutpay'])->name('checkout7');
+Route::get('/checkoutshow', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkoutshowEmpty');
 Route::get('/checkoutshow/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'show'])->name('checkoutshow');
-
 
 Route::get('/about', function () {
     return view('about.about');

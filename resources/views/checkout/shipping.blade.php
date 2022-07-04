@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('checkout6') }}" method="post">
+                    <form action="{{ route('checkout6',['codeunique'=>$codeunique]) }}" method="post">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ $user['user_id'] }}">
                         <input type="hidden" name="codeunique" value="{{ $codeunique }}">
@@ -54,7 +54,7 @@
                                         @foreach ($listPackages as $package)
                                         <tr>
                                             <td>
-                                                <input type="radio" name="idshipping" id="idshipping" value="{{$package->id}}">
+                                                <input type="radio" name="package_id" id="package_id" value="{{$package->id}}" required>
                                                 {{$package->name}}<br><span class="text-secondary">{{$package->country_scope}}</span></td>
                                             <td class="text-center">25 - 35 days</td>
                                             <td class="text-end">$0.00</td>

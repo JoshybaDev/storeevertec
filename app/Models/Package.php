@@ -10,10 +10,6 @@ class Package extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'product_id',
-        'name',
-        'price',
-        'cant',
-        'subtotal'
+        'country_scope'
     ];     
 }

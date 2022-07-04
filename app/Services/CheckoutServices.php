@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Order;
-use App\Models\OrderAddress;
 use App\Models\OrderDetail;
-use App\Models\OrderPackage;
 use Illuminate\Support\Str;
+use App\Models\OrderAddress;
+use App\Models\OrderPackage;
+use Illuminate\Database\Eloquent\Collection;
 
 final class CheckoutServices
 {
@@ -93,16 +95,17 @@ final class CheckoutServices
                 'cant' => $item['product_cant'],
                 'subtotal' => $item['product_subtotal'],
                 'name' => $item['product_name'],
+                'vigency'=>Carbon::now()->addDays(2),
             ]);
         }
     }
     /**
-     * Save address your user anonymus
+     * Save address your user anonymous
      *
      * @param array $DataAddress
      * @return void
      */
-    public static function saveAddressAnonymus(array $DataAddress): void
+    public static function saveAddressanonymous(array $DataAddress): void
     {
         $order_id = Order::where('codebuy', '=', $DataAddress['codeunique'])
             ->select('id')
@@ -160,5 +163,22 @@ final class CheckoutServices
             return true;
         }
         return false;
+    }
+    /**
+     * Save package for order
+     *
+     * @param array $paramsPackages
+     * @param Collection $order
+     * @return void
+     */
+    public static function savePackageforOrder(array $paramsPackages,Collection $order)
+    {
+        //update order shipping if apply
+        OrderPackage::create([
+            'order_id'=>$order[0]->id,
+            'package_id'=>$paramsPackages['package_id'],
+            'coust'=>0.00,
+            'responseapi'=>''
+        ]);
     }
 }

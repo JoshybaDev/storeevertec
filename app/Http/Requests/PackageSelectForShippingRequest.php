@@ -27,7 +27,7 @@ class PackageSelectForShippingRequest extends FormRequest
         return [
             'user_id' => 'required|integer|min:0',
             'codeunique'=>'required|exists:orders,codebuy',
-            'idshipping' => 'required|integer|exists:packages,id',
+            'package_id' => 'required|integer|exists:packages,id',
         ];
     }
 }

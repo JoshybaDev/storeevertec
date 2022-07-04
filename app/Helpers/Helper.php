@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Package;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -39,7 +40,12 @@ class Helper
             'updated_at' => date('Ymd')
         ]);
     }
-    public static function create_user_anonymus(): void
+    /**
+     * Creating user anonymous
+     *
+     * @return void
+     */
+    public static function create_user_anonymous(): void
     {
         User::create([
             'name' => 'anonymous',
@@ -50,5 +56,12 @@ class Helper
         User::where('id', '=', '1')->update([
             'id' => 0
         ]);        
+    }
+    public static function create_a_package_manually()
+    {
+        Package::create([
+            'name'=>'Estafeta',
+            'country_scope'=>'America'
+        ]);
     }
 }

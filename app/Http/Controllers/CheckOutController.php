@@ -45,6 +45,15 @@ class CheckOutController extends Controller
         return redirect()->route('checkout3', ['codeunique' => $codeunique]);
     }
     /**
+     * for all method or all methods that require the uniquecode parameter
+     *
+     * @return void
+     */
+    public function invalidCode()
+    {
+        return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
+    }
+    /**
      * Show form capture direction for anonymous
      * Name route: checkout3
      *
@@ -59,8 +68,8 @@ class CheckOutController extends Controller
         if ($order->isEmpty()) {
             return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
         }
-        if(!CheckoutServices::verifyCheckout3AddressEmpty($order[0]['id'])){
-            if(CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])){
+        if (!CheckoutServices::verifyCheckout3AddressEmpty($order[0]['id'])) {
+            if (CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])) {
                 return redirect()->route('checkout5', ['codeunique' => $codeunique]);
             }
             return redirect()->route('checkout7', ['codeunique' => $codeunique]);
@@ -86,7 +95,7 @@ class CheckOutController extends Controller
         $user_id = UserServices::currentUser()["user_id"];
         if ($user_id > 0) {
         } else {
-            CheckoutServices::saveAddressAnonymus($request->all());
+            CheckoutServices::saveAddressanonymous($request->all());
             return redirect()->route('checkout5', ['codeunique' => $request->codeunique]);
         }
     }
@@ -101,7 +110,7 @@ class CheckOutController extends Controller
         # code...
     }
     /**
-     * Undocumented function
+     * List de packages
      * Name route: checkout5
      * Get
      *
@@ -110,16 +119,18 @@ class CheckOutController extends Controller
     public function shipping($codeunique)
     {
         $order = Order::where('codebuy', '=', $codeunique)->select('id', 'total')->get();
-        if(!CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])){
-            if(CheckoutServices::verifyCheckout3AddressEmpty($order[0]['id'])){
-                return redirect()->route('checkout3', ['codeunique' => $codeunique]);
-            }
+        if ($order->isEmpty()) {
+            return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
+        }
+        if (CheckoutServices::verifyCheckout3AddressEmpty($order[0]['id'])) {
+            return redirect()->route('checkout3', ['codeunique' => $codeunique]);
+        } elseif (!CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])) {
             return redirect()->route('checkout7', ['codeunique' => $codeunique]);
         }
-        $listPackages=Package::all();
+        $listPackages = Package::all();
         $user = UserServices::currentUser();
         $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
-        $total = $order[0]["total"];        
+        $total = $order[0]["total"];
         return view('checkout.shipping', compact('codeunique', 'items', 'total', 'listPackages', 'user'));
     }
     /**
@@ -135,7 +146,9 @@ class CheckOutController extends Controller
         $order = Order::where('codebuy', '=', $request->codeunique)->select('id', 'total')->get();
         if ($order->isEmpty()) {
             return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
-        }        
+        }
+        CheckoutServices::savePackageforOrder($request->all(), $order);
+        return redirect()->route('checkout7', ['codeunique' => $request->codeunique]);
     }
     /**
      * Proccess tu pay order
@@ -146,13 +159,15 @@ class CheckOutController extends Controller
     public function checkoutpay($codeunique)
     {
         $order = Order::where('codebuy', '=', $codeunique)->select('id', 'total')->get();
-        if(CheckoutServices::verifyCheckout3AddressEmpty($order[0]['id'])){
+        if ($order->isEmpty()) {
+            return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
+        }
+        if (CheckoutServices::verifyCheckout3AddressEmpty($order[0]['id'])) {
             return redirect()->route('checkout3', ['codeunique' => $codeunique]);
         }
-        if(CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])){
+        if (CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])) {
             return redirect()->route('checkout5', ['codeunique' => $codeunique]);
         }
-        
     }
     /**
      * Main view of the order, 
@@ -180,14 +195,14 @@ class CheckOutController extends Controller
                 break;
             case 'SENDED':
                 break;
-            case 'REJECTED':                
+            case 'REJECTED':
             case 'CREATED':
-                return CheckoutServices::verifyEmptiesOrder($orderId,$codeunique);
+                return CheckoutServices::verifyEmptiesOrder($orderId, $codeunique);
                 break;
             default:
                 # code...
                 break;
         }
-        dd($orderStatus,'Joshyba');
+        dd($orderStatus, 'Joshyba');
     }
 }

@@ -17,7 +17,7 @@ class InstallController extends Controller
     {
         Artisan::call("migrate:refresh");
         Artisan::call("db:seed");
-        Helper::create_user_anonymus();
+        Helper::create_user_anonymous();
         return 'Ok';
     }
 }
