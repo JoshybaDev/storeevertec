@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Address')
+@section('title', 'Address')
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">
     <link rel="stylesheet" href="{{ url('css/tooltip.css') }}">
@@ -42,19 +42,21 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-lg-12"><input type="text" name="street" id="street"
-                                        class="form-control" required placeholder="Street" value="" maxlength="80" required>
+                                        class="form-control" required placeholder="Street" value="" maxlength="80"
+                                        required>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-lg-6"><input type="text" name="city" id="city"
-                                        class="form-control" required placeholder="City" value="" maxlength="40" required>
+                                        class="form-control" required placeholder="City" value="" maxlength="40"
+                                        required>
                                 </div>
                                 <div class="col-lg-6"><input type="state" name="state" id="state"
                                         class="form-control" required placeholder="State" maxlength="120" required></div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-lg-6"><input type="zipcode" name="zipcode" id="zipcode"
-                                    class="form-control" required placeholder="Zip Code" maxlength="120" required></div>
+                                        class="form-control" required placeholder="Zip Code" maxlength="120" required></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-4"></div>
@@ -67,16 +69,10 @@
                             </div>
                         </div>
                         @foreach ($items as $item)
-                            <div class="row border-bootom_claro mb-2">
-                                <div class="col-lg-5">
-                                    {{ $item['name'] }}<br>
-                                    {{ $item['cant'] }} x ${{ number_format($item['price'], 2) }}
-                                </div>
-                                <div class="col-lg-4"></div>
-                                <div class="col-lg-3 text-end aling-middle">
-                                    ${{ number_format($item['subtotal'], 2) }}
-                                </div>
-                            </div>
+                            @php
+                                $cart = true;
+                            @endphp
+                            @include('checkout.item_producto')
                         @endforeach
                         <div class="row">
                             <div class="col-lg-12">
@@ -123,7 +119,7 @@
                             <div class="col-lg-3 text-end">
                                 ${{ number_format($total, 2) }}
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

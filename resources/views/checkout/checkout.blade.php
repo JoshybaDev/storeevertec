@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Checkout')
+@section('title', 'Checkout')
 @section('css')
     <link rel="stylesheet" href="{{ url('css/borders.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">
@@ -40,8 +40,8 @@
                             <div class="row mb-2">
                                 <div class="col-lg-1"></div>
                                 <div class="col-lg-10"><input type="email" name="user_email" id="email"
-                                        class="form-control" required placeholder="Email" value="{{ $user['user_email'] }}"
-                                        maxlength="120"></div>
+                                        class="form-control" required placeholder="Email"
+                                        value="{{ $user['user_email'] }}" maxlength="120"></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-4"></div>
@@ -53,17 +53,11 @@
                                 <hr><span class="fw-bold fs-4">Order Summary</span>
                             </div>
                         </div>
+                        @php
+                            $cart = true;
+                        @endphp
                         @foreach ($items as $item)
-                            <div class="row border-bootom_claro mb-2">
-                                <div class="col-lg-5">
-                                    {{ $item['product_name'] }}<br>
-                                    {{ $item['product_cant'] }} x ${{ number_format($item['product_price'], 2) }}
-                                </div>
-                                <div class="col-lg-4"></div>
-                                <div class="col-lg-3 text-end aling-middle">
-                                    ${{ number_format($item['product_subtotal'], 2) }}
-                                </div>
-                            </div>
+                            @include('checkout.item_producto')
                         @endforeach
                         <div class="row">
                             <div class="col-lg-12">

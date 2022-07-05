@@ -168,6 +168,10 @@ class CheckOutController extends Controller
         if (CheckoutServices::verifyCheckout3PackagesEmpty($order[0]['id'])) {
             return redirect()->route('checkout5', ['codeunique' => $codeunique]);
         }
+        $user = UserServices::currentUser();
+        $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
+        $total = $order[0]["total"];
+        return view('checkout.paynow',compact('items','total', 'user'));
     }
     /**
      * Main view of the order, 
