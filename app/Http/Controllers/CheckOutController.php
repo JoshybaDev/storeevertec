@@ -49,8 +49,10 @@ class CheckOutController extends Controller
     {
         $validated = $request->validated();
         $codeunique = CheckoutServices::createOrderWithItems($request->all());
-        CartServices::cartEmptyNow();
-        CheckoutServices::sendEmail($codeunique);
+        if ($codeunique != "NoValidCode_EmptyProducts") {
+            CheckoutServices::sendEmail($codeunique);
+            CartServices::cartEmptyNow();
+        }
         return redirect()->route('checkout3', ['codeunique' => $codeunique]);
     }
     /**
@@ -110,7 +112,7 @@ class CheckOutController extends Controller
         }
     }
     /**
-     * Undocumented function
+     * Method received information before paying
      * Name route: checkout45
      *
      * @return void
@@ -202,16 +204,16 @@ class CheckOutController extends Controller
         $payProcess = new PayProcessService();
         $codeunique = $request->codeunique;
         $msg = null;
-
+        //Verify is saved a request with status PENDING
         if ($payProcess->estatusPayPending($codeunique)) {
             return Redirect()->away($payProcess->processUrl);
         }
-
+        //if rejected create new request
         if ($payProcess->createRequest($codeunique)) {
-            return Redirect($payProcess->processUrl);
+            return Redirect()->away($payProcess->processUrl);
         }
         // if ($payProcess->createRequestMinimum($codeunique)) {
-        //     return Redirect($payProcess->processUrl);
+        //     return Redirect()->away($payProcess->processUrl);
         // }
         if ($payProcess->error) {
             $msg = ['msg' => $payProcess->message];
@@ -262,17 +264,17 @@ class CheckOutController extends Controller
         }
         $orderStatus = $order[0]['status'];
         $orderId = $order[0]['id'];
-        $total = $order[0]["total"];   
+        $total = $order[0]["total"];
         $user = UserServices::currentUser();
-        $items = OrderDetail::where('order_id', '=', $orderId)->get();          
+        $items = OrderDetail::where('order_id', '=', $orderId)->get();
         switch ($orderStatus) {
             case 'PAYED':
-                return view('checkout.payed',compact('items', 'total', 'user', 'codeunique', 'order'));
+                return view('checkout.payed', compact('items', 'total', 'user', 'codeunique', 'order'));
                 break;
             case 'SENDED':
                 $orderAddress = OrderAddress::where('order_id', '=', $orderId)->get();
-                $orderPackage = OrderPackage::where('order_id', '=', $orderId)->get();                
-                return view('checkout.sended',compact('items', 'total', 'user', 'codeunique', 'order','orderAddress','orderPackage'));
+                $orderPackage = OrderPackage::where('order_id', '=', $orderId)->get();
+                return view('checkout.sended', compact('items', 'total', 'user', 'codeunique', 'order', 'orderAddress', 'orderPackage'));
                 break;
             case 'REJECTED':
             case 'CREATED':

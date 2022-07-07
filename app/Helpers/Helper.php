@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\Package;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class Helper
 {
@@ -58,7 +59,12 @@ class Helper
             'id' => 0
         ]);        
     }
-    public function create_user_admin()
+    /**
+     * Create user Admin
+     *
+     * @return void
+     */
+    public static function create_user_admin()
     {
         User::create([
             'name' => 'admin',
@@ -68,6 +74,16 @@ class Helper
             'mobile' => '9612568479'
         ]);
     }
+    public static function create_user_email_pass($email,$password)
+    {
+        User::create([
+            'name' => 'admin',
+            'surname' => 'full',
+            'email' => $email,
+            'password' => Hash::make($password),
+            'mobile' => '9612568479'
+        ]);
+    }    
     /**
      * Create a package
      *

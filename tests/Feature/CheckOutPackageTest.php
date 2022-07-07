@@ -46,6 +46,7 @@ class CheckOutPackageTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
             'user_email' => 'usermail@gmail.com'
         ]);
@@ -129,6 +130,7 @@ class CheckOutPackageTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
             'user_email' => 'usermail@gmail.com'
         ]);
@@ -207,6 +209,7 @@ class CheckOutPackageTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
             'user_email' => 'usermail@gmail.com'
         ]);
@@ -280,6 +283,7 @@ class CheckOutPackageTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
             'user_email' => 'usermail@gmail.com'
         ]);
@@ -334,6 +338,7 @@ class CheckOutPackageTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
             'user_email' => 'usermail@gmail.com'
         ]);

@@ -109,3 +109,123 @@ La petición se ha procesado correctamente
           
           
 -------------------
+https://checkout-co.placetopay.dev/session/57325/802d1ef493cc638966bbcfcb9044d8cc
+57325
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:32:33-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57327/d71af23086497acc09cfb4066c251b3c
+57327
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:38:04-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57329/42dfded668100cfe9dfe9a56688b9534
+57329
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:39:22-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57331/5f18795d2c4bb2f13ea98b5361c39dc9
+57331
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:40:49-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57332/8892bbb7854d83158eed3b35a72a1cbd
+57332
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:41:45-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57333/ba3952ca4d278e468853164649ef55b7
+57333
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:46:17-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57334/364bc5d86c6552109b337c325f0c595c
+57334
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:46:33-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57335/2975fe62eef1e64bc93bda54c0dec1f2
+57335
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:50:18-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57336/314999a157c84584adcfa9ef979dbacb
+57336
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:51:47-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57337/6bf4b8c1c4b48cce25160c7d0c30c45f
+57337
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:55:17-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57338/141145ca7fcc105f386795fc23588e40
+57338
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T15:56:58-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57347/5f1a2d6f8e42650d664d5fba0325cfd0
+57347
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-07T17:25:53-05:00
+1
+          
+          
+-------------------

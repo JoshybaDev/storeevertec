@@ -59,6 +59,7 @@ class CheckOutTest extends TestCase
             ->assertSessionHasErrors([
                 'user_id' => 'The user id field is required.',
                 'user_name' => 'The user name field is required.',
+                'user_surname' => 'The user surname field is required.',
                 'user_mobile' => 'The user mobile field is required.',
                 'user_email' => 'The user email field is required.',
             ]);
@@ -72,6 +73,7 @@ class CheckOutTest extends TestCase
     {
         $response = $this->post('/checkout2', [
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
             'user_email' => 'usermail@gmail.com'
         ])->assertSessionHasErrors([
@@ -91,6 +93,7 @@ class CheckOutTest extends TestCase
             'user_email' => 'usermail@gmail.com'
         ])->assertSessionHasErrors([
             'user_name' => 'The user name field is required.',
+            'user_surname' => 'The user surname field is required.',
         ]);
     }
     /**
@@ -103,6 +106,7 @@ class CheckOutTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_email' => 'usermail@gmail.com'
         ])->assertSessionHasErrors([
             'user_mobile' => 'The user mobile field is required.',
@@ -118,6 +122,7 @@ class CheckOutTest extends TestCase
         $response = $this->post('/checkout2', [
             'user_id' => 0,
             'user_name' => 'Joshua',
+            'user_surname' => 'Kalel',
             'user_mobile' => '9612386248',
         ])->assertSessionHasErrors([
             'user_email' => 'The user email field is required.',
@@ -135,6 +140,7 @@ class CheckOutTest extends TestCase
             'user_id' => 0,
             'codebuy' => 'J7J7J7J7J6J6J5J5J4J3',
             'customer_name' => 'Joshua',
+            'customer_surname' => 'Kalel',
             'customer_email' => 'email@gmail.com',
             'customer_mobile' => '9612386248',
             'cant' => 0,

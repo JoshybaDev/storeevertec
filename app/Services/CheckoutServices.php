@@ -219,16 +219,17 @@ final class CheckoutServices
     {
         $dataEmail = [];
         $order = Order::where('codebuy', '=', $codeunique)->get();
-        $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
-        $total = $order[0]["total"];
-        $dataEmail = [
-            'codeunique' => $codeunique,
-            'order' => $order,
-            'items' => $items,
-            'total' => $total
-        ];
-        //dd($dataEmail);
-        $dataEmail[0] = 'Joshyba';
-        Mail::to($order[0]->customer_email)->send(new MailOrderCheckout($dataEmail,));
+        if (!$order->isEmpty()) {
+            $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
+            $total = $order[0]["total"];
+            $dataEmail = [
+                'codeunique' => $codeunique,
+                'order' => $order,
+                'items' => $items,
+                'total' => $total
+            ];
+            $dataEmail[0] = 'Joshyba';
+            Mail::to($order[0]->customer_email)->send(new MailOrderCheckout($dataEmail,));
+        }
     }
 }

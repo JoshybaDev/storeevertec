@@ -32,10 +32,10 @@ class OrderController extends Controller
     /**
      * Show an order
      *
-     * @param [type] $id
+     * @param [int] $id
      * @return void
      */
-    public function show($id)
+    public function show(int $id)
     {
         $orderId = $id;
         $order = Order::where('id', '=', $orderId)->get();
@@ -49,10 +49,10 @@ class OrderController extends Controller
     /**
      * Method return url of request pay 
      *
-     * @param [type] $id
+     * @param [int] $id
      * @return void
      */
-    public function showUrlPay($id)
+    public function showUrlPay(int $id)
     {
         if (Auth()->user()->level != 'ADMIN') {
             return '';

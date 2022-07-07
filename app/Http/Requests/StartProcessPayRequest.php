@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StartProcessPayRequest extends FormRequest
 {
+    //protected $redirectRoute = 'checkout7';
     /**
      * Determine if the user is authorized to make this request.
      *
