@@ -70,7 +70,7 @@
                         </div>
                         @foreach ($items as $item)
                             @php
-                                $cart = true;
+                                $cart = false;
                             @endphp
                             @include('checkout.item_producto')
                         @endforeach

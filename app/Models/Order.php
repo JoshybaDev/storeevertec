@@ -12,6 +12,7 @@ class Order extends Model
         'user_id',
         'codebuy',
         'customer_name',
+        'customer_surname',
         'customer_email',
         'customer_mobile',
         'cant',

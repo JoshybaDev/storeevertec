@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Services\UserServices;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CheckoutCreateOrdenRequest extends FormRequest
+class StartProcessPayRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,7 @@ class CheckoutCreateOrdenRequest extends FormRequest
     {
         return [
             'user_id' => 'required|integer|min:0',
-            'user_name' => 'required|string|max:80',
-            'user_surname' => 'required|string|max:80',
-            'user_mobile' => 'required|string|max:40',
-            'user_email' => 'required|string|max:120',
+            'codeunique'=>'required|exists:orders,codebuy',
         ];
     }
 }

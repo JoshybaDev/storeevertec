@@ -1,7 +1,7 @@
 @if ($errors->any())
 <div class="row">
     <div class="col-lg-12 text-center fw-bold">
-        <div style="margin:auto;width:300px">
+        <div style="margin:auto;width:500px">
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)

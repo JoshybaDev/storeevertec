@@ -8,6 +8,8 @@ use App\Models\OrderDetail;
 use Illuminate\Support\Str;
 use App\Models\OrderAddress;
 use App\Models\OrderPackage;
+use App\Mail\MailOrderCheckout;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Collection;
 
 final class CheckoutServices
@@ -71,6 +73,7 @@ final class CheckoutServices
             'user_id' => $dataClient["user_id"],
             'codebuy' => $codigoUnique,
             'customer_name' => $dataClient["user_name"],
+            'customer_surname' => $dataClient["user_surname"],
             'customer_email' => $dataClient["user_email"],
             'customer_mobile' => $dataClient["user_mobile"],
             'cant' => $products_total,
@@ -95,7 +98,7 @@ final class CheckoutServices
                 'cant' => $item['product_cant'],
                 'subtotal' => $item['product_subtotal'],
                 'name' => $item['product_name'],
-                'vigency'=>Carbon::now()->addDays(2),
+                'vigency' => Carbon::now()->addDays(2),
             ]);
         }
     }
@@ -128,10 +131,10 @@ final class CheckoutServices
      */
     public static function verifyEmptiesOrder(int $orderId, string $codeunique)
     {
-        if(self::verifyCheckout3AddressEmpty($orderId)){
+        if (self::verifyCheckout3AddressEmpty($orderId)) {
             return redirect()->route('checkout3', ['codeunique' => $codeunique]);
         }
-        if(self::verifyCheckout3PackagesEmpty($orderId)){
+        if (self::verifyCheckout3PackagesEmpty($orderId)) {
             return redirect()->route('checkout5', ['codeunique' => $codeunique]);
         }
         return redirect()->route('checkout7', ['codeunique' => $codeunique]);
@@ -171,14 +174,35 @@ final class CheckoutServices
      * @param Collection $order
      * @return void
      */
-    public static function savePackageforOrder(array $paramsPackages,Collection $order)
+    public static function savePackageforOrder(array $paramsPackages, Collection $order)
     {
-        //update order shipping if apply
         OrderPackage::create([
-            'order_id'=>$order[0]->id,
-            'package_id'=>$paramsPackages['package_id'],
-            'coust'=>0.00,
-            'responseapi'=>''
+            'order_id' => $order[0]->id,
+            'package_id' => $paramsPackages['package_id'],
+            'coust' => 0.00,
+            'responseapi' => ''
         ]);
+    }
+    /**
+     * Send email with data order
+     *
+     * @param [string] $codeunique
+     * @return void
+     */
+    public static function sendEmail($codeunique)
+    {
+        $dataEmail = [];
+        $order = Order::where('codebuy', '=', $codeunique)->get();
+        $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
+        $total = $order[0]["total"];
+        $dataEmail = [
+            'codeunique'=>$codeunique,
+            'order'=>$order,            
+            'items' => $items,
+            'total' => $total
+        ];
+        //dd($dataEmail);
+        $dataEmail[0]='Joshyba';
+        Mail::to($order[0]->customer_email)->send(new MailOrderCheckout($dataEmail,));
     }
 }

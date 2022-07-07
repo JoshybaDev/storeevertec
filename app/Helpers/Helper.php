@@ -49,6 +49,7 @@ class Helper
     {
         User::create([
             'name' => 'anonymous',
+            'surname' => 'surname',
             'email' => 'anonymous@storeevertec.com',
             'password' => bcrypt('anonymous'),
             'mobile' => '9612568479'
@@ -57,11 +58,25 @@ class Helper
             'id' => 0
         ]);        
     }
-    public static function create_a_package_manually()
+    /**
+     * Create a package
+     *
+     * @return void
+     */
+    public static function create_a_package_manually(): void
     {
         Package::create([
             'name'=>'Estafeta',
             'country_scope'=>'America'
         ]);
+    }
+    public static function logWrite(string $data)
+    {
+        $file=__DIR__;
+        $file=str_replace("app\Helpers","",$file);
+        $file=$file."log.txt";
+        $fh = fopen($file, 'a');
+        fwrite($fh, $data . PHP_EOL);
+        fclose($fh);
     }
 }

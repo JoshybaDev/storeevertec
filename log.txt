@@ -1,0 +1,111 @@
+^ Dnetix\Redirection\Message\RedirectInformation {#1324 ▼
+  #requestId: "57191"
+  #request: Dnetix\Redirection\Message\RedirectRequest {#1317 ▼
+    #locale: "es_CO"
+    #payer: Dnetix\Redirection\Entities\Person {#1315 ▶}
+    #buyer: Dnetix\Redirection\Entities\Person {#1316 ▶}
+    #payment: Dnetix\Redirection\Entities\DispersionPayment {#1304 ▶}
+    #subscription: null
+    #returnUrl: "http://storeevertec.test/responseProcessPay?codeunique=kuLsjjSMqNBO77g5AFBB"
+    #paymentMethod: ""
+    #cancelUrl: ""
+    #ipAddress: "127.0.0.1"
+    #userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36"
+    #expiration: "2022-07-07T17:52:24-05:00"
+    #captureAddress: false
+    #skipResult: false
+    #noBuyerFill: false
+    #fields: []
+  }
+  #payment: []
+  #subscription: null
+  #status: Dnetix\Redirection\Entities\Status {#1321 ▼
+    #status: "PENDING"
+    #reason: "PC"
+    #message: "La petición se encuentra activa"
+    #date: "2022-07-05T18:28:08-05:00"
+  }
+}
+
+^ Dnetix\Redirection\Message\RedirectResponse {#1339 ▼
+  #requestId: "57191"--rejected
+  #processUrl: "https://checkout-co.placetopay.dev/session/57191/ad752f9a924d5679c43af33dc957bb20"
+  #status: Dnetix\Redirection\Entities\Status {#1336 ▼
+    #status: "OK"
+    #reason: "PC"
+    #message: "La petición se ha procesado correctamente"
+    #date: "2022-07-05T17:52:26-05:00"
+  }
+}
+
+-------------------
+https://checkout-co.placetopay.dev/session/57193/17c3d5bc890b73cf55e02cc0b2a3061e
+57193--rejected
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T17:58:59-05:00
+1
+
+
+-------------------
+https://checkout-co.placetopay.dev/session/57195/9391885635b0cbed3102232cc5b46d97
+57195
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T18:04:03-05:00
+1
+          
+          
+-------------------          
+https://checkout-co.placetopay.dev/session/57196/ca31e40bde7bb4bd86ac57ff93f226c8
+57196
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T18:05:50-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57197/790f7adcf0af9c9ff81b88b88c68d89f
+57197
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T18:08:14-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57198/914c20eebb53a2652f2dce8ac85bde4c
+57198
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T18:09:30-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57206/58666f51980f2761173d6cce28f01f52
+57206
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T19:48:57-05:00
+1
+          
+          
+-------------------
+https://checkout-co.placetopay.dev/session/57207/833448966ce68fae9b5bcef6f2c33a7e
+57207  ---APPROVED
+OK
+PC
+La petición se ha procesado correctamente
+2022-07-05T20:26:36-05:00
+1
+          
+          
+-------------------

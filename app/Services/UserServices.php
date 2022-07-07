@@ -17,6 +17,7 @@ final class UserServices
         $user = [
             'user_id' => 0,
             'user_name' => '',
+            'user_surname' => '',
             'user_mobile' => '',
             'user_email' => ''
         ];
@@ -24,6 +25,7 @@ final class UserServices
             $currentUser = User::find(Auth::user()?->id);
             $user["user_id"] = $currentUser->id;
             $user["user_name"] = $currentUser->name;
+            $user["user_surname"] = $currentUser->surname;
             $user["user_mobile"] = $currentUser->mobile;
             $user["user_email"] = $currentUser->email;
         }

@@ -34,6 +34,8 @@ Route::get('/checkout7', [App\Http\Controllers\CheckOutController::class, 'inval
 Route::get('/checkout7/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'checkoutpay'])->name('checkout7');
 Route::get('/checkoutshow', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkoutshowEmpty');
 Route::get('/checkoutshow/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'show'])->name('checkoutshow');
+Route::post('/startProcessPay', [App\Http\Controllers\CheckOutController::class, 'startProcessPay'])->name('startProcessPay');
+Route::get('/responseProcessPay', [App\Http\Controllers\CheckOutController::class, 'responseProcessPay'])->name('responseProcessPay');
 
 Route::get('/about', function () {
     return view('about.about');
@@ -42,3 +44,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/installation_system_full_30062020', [App\Http\Controllers\InstallController::class, 'index'])->name('install');
+Route::get('/emailshowtest/{codeunique}', [App\Http\Controllers\InstallController::class, 'emailshowtest'])->name('emailshowtest');
+Route::get('/emailsendtest/{codeunique}', [App\Http\Controllers\InstallController::class, 'sendEmailCheckOut'])->name('emailsendtest');

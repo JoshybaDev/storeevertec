@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddressSaveRequest;
-use App\Http\Requests\CheckoutCreateOrdenRequest;
-use App\Http\Requests\PackageSelectForShippingRequest;
 use App\Models\Order;
-use App\Models\OrderDetail;
+use App\Helpers\Helper;
 use App\Models\Package;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Services\CartServices;
-use App\Services\CheckoutServices;
 use App\Services\UserServices;
+use App\Services\CheckoutServices;
+use App\Services\PayProcessService;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\AddressSaveRequest;
+use App\Http\Requests\StartProcessPayRequest;
+use App\Http\Requests\ResponseProcessPayRequest;
+use App\Http\Requests\CheckoutCreateOrdenRequest;
+use App\Http\Requests\PackageSelectForShippingRequest;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CheckOutController extends Controller
 {
@@ -42,6 +48,7 @@ class CheckOutController extends Controller
         $validated = $request->validated();
         $codeunique = CheckoutServices::createOrderWithItems($request->all());
         CartServices::cartEmptyNow();
+        CheckoutServices::sendEmail($codeunique);
         return redirect()->route('checkout3', ['codeunique' => $codeunique]);
     }
     /**
@@ -158,7 +165,7 @@ class CheckOutController extends Controller
      */
     public function checkoutpay($codeunique)
     {
-        $order = Order::where('codebuy', '=', $codeunique)->select('id', 'total')->get();
+        $order = Order::where('codebuy', '=', $codeunique)->select('id', 'total', 'taxes', 'shipping', 'shipping_discount', 'status')->get();
         if ($order->isEmpty()) {
             return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
         }
@@ -171,7 +178,66 @@ class CheckOutController extends Controller
         $user = UserServices::currentUser();
         $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
         $total = $order[0]["total"];
-        return view('checkout.paynow',compact('items','total', 'user'));
+        $orderStatus = $order[0]['status'];
+        switch ($orderStatus) {
+            case 'PAYED':
+            case 'SENDED':
+                return redirect()->route('checkoutshow', ['codeunique' => $codeunique]);
+                break;
+        }
+        return view('checkout.paynow', compact('items', 'total', 'user', 'codeunique', 'order'));
+    }
+    /**
+     * Execute the first step for pay
+     * Post
+     *
+     * @return void
+     */
+    public function startProcessPay(StartProcessPayRequest $request)
+    {
+        $validated = $request->validated();
+        $payProcess = new PayProcessService();
+        $codeunique = $request->codeunique;
+        $msg = null;
+
+        if ($payProcess->estatusPayPending($codeunique)) {
+            return Redirect()->away($payProcess->processUrl);
+        }
+
+        if ($payProcess->createRequest($codeunique)) {
+            return Redirect($payProcess->processUrl);
+        }
+        // if ($payProcess->createRequestMinimum($codeunique)) {
+        //     return Redirect($payProcess->processUrl);
+        // }
+        if ($payProcess->error) {
+            $msg = ['msg' => $payProcess->message];
+            return redirect()->route('checkout7', ['codeunique' => $codeunique])->withErrors($msg);
+        }
+        return redirect()->route('checkout7', ['codeunique' => $codeunique]);
+    }
+    /**
+     * Response before proccesPay
+     *
+     * @return void
+     */
+    public function responseProcessPay(ResponseProcessPayRequest $request)
+    {
+        $validated = $request->validated();
+        $payProcess = new PayProcessService();
+        $codeunique = $request->codeunique;
+        $payProcess->estatusPay($codeunique);
+        return redirect()->route('checkout7', ['codeunique' => $codeunique]);
+    }
+    public function nofityProcessPay()
+    {
+        // $data="";
+        // foreach ($request()->all() as $key => $value) {
+        //     $data="";
+        // }
+        // $fh = fopen($file, 'w');
+        // fwrite($fh, '<?php $secret = "'.$secret.'";' . PHP_EOL);
+        // fclose($fh);
     }
     /**
      * Main view of the order, 
@@ -187,26 +253,30 @@ class CheckOutController extends Controller
      */
     public function show($codeunique)
     {
-        $order = Order::where('codebuy', '=', $codeunique)->select('id', 'status')->get();
+        $order = Order::where('codebuy', '=', $codeunique)->select('id', 'total', 'taxes', 'shipping', 'shipping_discount', 'status')->get();
         if (empty($order[0])) {
             return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
         }
         $orderStatus = $order[0]['status'];
         $orderId = $order[0]['id'];
+        $user = UserServices::currentUser();
+        $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
+        $total = $order[0]["total"];
+        $orderStatus = $order[0]['status'];        
         switch ($orderStatus) {
             case 'PAYED':
-                # code...
+                return view('order.payed',compact('items', 'total', 'user', 'codeunique', 'order'));
                 break;
             case 'SENDED':
+                return view('order.sended',compact('items', 'total', 'user', 'codeunique', 'order'));
                 break;
             case 'REJECTED':
             case 'CREATED':
                 return CheckoutServices::verifyEmptiesOrder($orderId, $codeunique);
                 break;
             default:
-                # code...
+                return redirect()->route('products');
                 break;
         }
-        dd($orderStatus, 'Joshyba');
     }
 }

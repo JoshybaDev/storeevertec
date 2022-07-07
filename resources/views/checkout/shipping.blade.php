@@ -2,6 +2,7 @@
 @section('title', 'shipping')
 @section('css')
     <link rel="stylesheet" href="{{ url('css/borders.css') }}">
+    <link rel="stylesheet" href="{{ url('css/tooltip.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.css">
 @endsection
 @section('content')

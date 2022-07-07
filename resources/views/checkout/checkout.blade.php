@@ -33,6 +33,12 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-lg-1"></div>
+                                <div class="col-lg-10"><input type="text" name="user_surname" id="surname"
+                                        class="form-control" required placeholder="SurName" value="{{ $user['user_surname'] }}"
+                                        maxlength="80"></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-lg-1"></div>
                                 <div class="col-lg-10"><input type="text" name="user_mobile" id="mobile"
                                         class="form-control" required placeholder="Mobile"
                                         value="{{ $user['user_mobile'] }}" maxlength="40"></div>

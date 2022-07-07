@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id");
             $table->foreign('user_id')->references('id')->on('users');           
             $table->string('codebuy',20)->unique();
-            $table->string("customer_name",200);
+            $table->string("customer_name",100);
+            $table->string("customer_surname",100);
             $table->string("customer_email",250);
             $table->string('customer_mobile',15);
             $table->string('status',15)->default('CREATED');
