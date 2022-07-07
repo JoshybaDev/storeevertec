@@ -18,7 +18,7 @@
                     <table style="width: 100%">
                         <tr style="margin-bottom: 10px">
                             <td colspan="2" style="text-align: center">
-                                Hola <span style="font-weight: bold;font-size: 1rem">{{$dataEmail['order'][0]['customer_name']}} {{$dataEmail['order'][0]['customer_surname']}}  </span>                               
+                                Hello <span style="font-weight: bold;font-size: 1rem">{{$dataEmail['order'][0]['customer_name']}} {{$dataEmail['order'][0]['customer_surname']}}  </span>                               
                             </td>
                         </tr>                        
                         <tr style="margin-bottom: 10px">

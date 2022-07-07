@@ -101,6 +101,7 @@ class CheckOutController extends Controller
         $validated = $request->validated();
         $user_id = UserServices::currentUser()["user_id"];
         if ($user_id > 0) {
+            CheckoutServices::saveAddresUser($request->all());
         } else {
             CheckoutServices::saveAddressanonymous($request->all());
             return redirect()->route('checkout5', ['codeunique' => $request->codeunique]);
@@ -259,16 +260,15 @@ class CheckOutController extends Controller
         }
         $orderStatus = $order[0]['status'];
         $orderId = $order[0]['id'];
+        $total = $order[0]["total"];   
         $user = UserServices::currentUser();
-        $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
-        $total = $order[0]["total"];
-        $orderStatus = $order[0]['status'];        
+        $items = OrderDetail::where('order_id', '=', $orderId)->get();          
         switch ($orderStatus) {
             case 'PAYED':
-                return view('order.payed',compact('items', 'total', 'user', 'codeunique', 'order'));
+                return view('checkout.payed',compact('items', 'total', 'user', 'codeunique', 'order'));
                 break;
             case 'SENDED':
-                return view('order.sended',compact('items', 'total', 'user', 'codeunique', 'order'));
+                return view('checkout.sended',compact('items', 'total', 'user', 'codeunique', 'order'));
                 break;
             case 'REJECTED':
             case 'CREATED':

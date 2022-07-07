@@ -37,11 +37,15 @@ Route::get('/checkoutshow/{codeunique}', [App\Http\Controllers\CheckOutControlle
 Route::post('/startProcessPay', [App\Http\Controllers\CheckOutController::class, 'startProcessPay'])->name('startProcessPay');
 Route::get('/responseProcessPay', [App\Http\Controllers\CheckOutController::class, 'responseProcessPay'])->name('responseProcessPay');
 
+
+
 Route::get('/about', function () {
     return view('about.about');
 })->name('about');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
+Route::get('/orders/{id}', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
 
 Route::get('/installation_system_full_30062020', [App\Http\Controllers\InstallController::class, 'index'])->name('install');
 Route::get('/emailshowtest/{codeunique}', [App\Http\Controllers\InstallController::class, 'emailshowtest'])->name('emailshowtest');

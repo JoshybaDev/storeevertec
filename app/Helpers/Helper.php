@@ -58,6 +58,16 @@ class Helper
             'id' => 0
         ]);        
     }
+    public function create_user_admin()
+    {
+        User::create([
+            'name' => 'admin',
+            'surname' => 'full',
+            'email' => 'admin@storeevertec.com',
+            'password' => bcrypt('anonymous'),
+            'mobile' => '9612568479'
+        ]);
+    }
     /**
      * Create a package
      *
@@ -70,6 +80,12 @@ class Helper
             'country_scope'=>'America'
         ]);
     }
+    /**
+     * creaseCreate a log file in the root
+     *
+     * @param string $data
+     * @return void
+     */
     public static function logWrite(string $data)
     {
         $file=__DIR__;

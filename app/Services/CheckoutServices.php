@@ -9,8 +9,10 @@ use Illuminate\Support\Str;
 use App\Models\OrderAddress;
 use App\Models\OrderPackage;
 use App\Mail\MailOrderCheckout;
+use App\Models\UserAddress;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 final class CheckoutServices
 {
@@ -101,6 +103,30 @@ final class CheckoutServices
                 'vigency' => Carbon::now()->addDays(2),
             ]);
         }
+    }
+    public static function saveAddresUser(array $DataAddress): void
+    {
+        $order_id = Order::where('codebuy', '=', $DataAddress['codeunique'])
+            ->select('id')
+            ->get()[0]['id'];
+        $userAddresIs = UserAddress::create([
+            'user_id' => Auth()->user()->id,
+            'street' => $DataAddress['street'],
+            'city' => $DataAddress['city'],
+            'state' => $DataAddress['state'],
+            'zipcode' => $DataAddress['zipcode'],
+        ]);
+        OrderAddress::create([
+            'order_id' => $order_id,
+            'street' => $DataAddress['street'],
+            'city' => $DataAddress['city'],
+            'state' => $DataAddress['state'],
+            'zipcode' => $DataAddress['zipcode'],
+        ]);
+        $order_id = Order::where('codebuy', '=', $DataAddress['codeunique'])
+            ->update([
+                'user_address_id' => $userAddresIs->id,
+            ]);
     }
     /**
      * Save address your user anonymous
@@ -196,13 +222,13 @@ final class CheckoutServices
         $items = OrderDetail::where('order_id', '=', $order[0]["id"])->get();
         $total = $order[0]["total"];
         $dataEmail = [
-            'codeunique'=>$codeunique,
-            'order'=>$order,            
+            'codeunique' => $codeunique,
+            'order' => $order,
             'items' => $items,
             'total' => $total
         ];
         //dd($dataEmail);
-        $dataEmail[0]='Joshyba';
+        $dataEmail[0] = 'Joshyba';
         Mail::to($order[0]->customer_email)->send(new MailOrderCheckout($dataEmail,));
     }
 }
