@@ -95,6 +95,36 @@
                         ${{ number_format($total, 2) }}
                     </div>
                 </div>
+                <div class="mb-2">&nbsp;</div>
+                <div class="card" style="width: 800px;margin:auto">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Receive Order</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-lg-2">
+                                Client:
+                            </div>
+                            <div class="col-lg-3">
+                                {{ $order[0]['customer_name'] }} {{ $order[0]['customer_surname'] }}
+                            </div>
+                            <div class="col-lg-2">
+                                Email:
+                            </div>
+                            <div class="col-lg-5">
+                                {{ $order[0]['customer_email'] }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                Mobile:
+                            </div>
+                            <div class="col-lg-2">
+                                {{ $order[0]['customer_mobile'] }}
+                            </div>
+                        </div>
+                    </div>
+                </div>                  
             </div>
         </div>
     </div>

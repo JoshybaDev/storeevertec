@@ -276,7 +276,7 @@ final class PayProcessService
                     OrderPayData::where('order_id', '=', $order[0]["id"])
                         ->update([
                             'status_pay' => $response->status()->status(),
-                            'status_mesage' => $response->status()->message(),
+                            'status_message' => $response->status()->message(),
                             'status_date' => $response->status()->date()
                         ]);
                 } elseif ($response->status()->status() == 'REJECTED') {
@@ -287,7 +287,7 @@ final class PayProcessService
                     OrderPayData::where('order_id', '=', $order[0]["id"])
                         ->update([
                             'status_pay' => $response->status()->status(),
-                            'status_mesage' => $response->status()->message(),
+                            'status_message' => $response->status()->message(),
                             'status_date' => $response->status()->date()
                         ]);
                 }

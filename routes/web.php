@@ -21,32 +21,38 @@ Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name
 Route::post('/cart', [App\Http\Controllers\CartController::class, 'cartAdd'])->name('cartAdd');
 Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'cartDel'])->name('cartDel');
 
-Route::get('/checkout1', [App\Http\Controllers\CheckOutController::class, 'index'])->name('checkout1');
-Route::post('/checkout2', [App\Http\Controllers\CheckOutController::class, 'store'])->name('checkout2');
-Route::get('/checkout3', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkout3Empty');
-Route::get('/checkout3/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'direction'])->name('checkout3');
-Route::post('/checkout4', [App\Http\Controllers\CheckOutController::class, 'storeDirection'])->name('checkout4');
-Route::post('/checkout4_5', [App\Http\Controllers\CheckOutController::class, 'selectDirection'])->name('checkout4_5');
-Route::get('/checkout5', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkout5Empty');
-Route::get('/checkout5/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'shipping'])->name('checkout5');
-Route::post('/checkout6', [App\Http\Controllers\CheckOutController::class, 'shippingSave'])->name('checkout6');
-Route::get('/checkout7', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkout7Empty');
-Route::get('/checkout7/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'checkoutpay'])->name('checkout7');
-Route::get('/checkoutshow', [App\Http\Controllers\CheckOutController::class, 'invalidCode'])->name('checkoutshowEmpty');
-Route::get('/checkoutshow/{codeunique}', [App\Http\Controllers\CheckOutController::class, 'show'])->name('checkoutshow');
-Route::post('/startProcessPay', [App\Http\Controllers\CheckOutController::class, 'startProcessPay'])->name('startProcessPay');
-Route::get('/responseProcessPay', [App\Http\Controllers\CheckOutController::class, 'responseProcessPay'])->name('responseProcessPay');
-
-
+Route::controller(App\Http\Controllers\CheckOutController::class)->group(function () {
+    Route::get('/checkout1', 'index')->name('checkout1');
+    Route::post('/checkout2', 'store')->name('checkout2');
+    Route::get('/checkout3', 'invalidCode')->name('checkout3Empty');
+    Route::get('/checkout3/{codeunique}', 'direction')->name('checkout3');
+    Route::post('/checkout4', 'storeDirection')->name('checkout4');
+    Route::post('/checkout4_5', 'selectDirection')->name('checkout4_5');
+    Route::get('/checkout5', 'invalidCode')->name('checkout5Empty');
+    Route::get('/checkout5/{codeunique}', 'shipping')->name('checkout5');
+    Route::post('/checkout6', 'shippingSave')->name('checkout6');
+    Route::get('/checkout7', 'invalidCode')->name('checkout7Empty');
+    Route::get('/checkout7/{codeunique}', 'checkoutpay')->name('checkout7');
+    Route::get('/checkoutshow', 'invalidCode')->name('checkoutshowEmpty');
+    Route::get('/checkoutshow/{codeunique}',  'show')->name('checkoutshow');
+    Route::post('/startProcessPay', 'startProcessPay')->name('startProcessPay');
+    Route::get('/responseProcessPay', 'responseProcessPay')->name('responseProcessPay');
+});
 
 Route::get('/about', function () {
     return view('about.about');
 })->name('about');
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
-Route::get('/orders/{id}', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
+Route::controller(App\Http\Controllers\OrderController::class)->group(function () {
+    Route::get('/home', 'index')->name('home');
+    Route::get('/orders', 'index')->name('orders');
+    Route::get('/orders/{id}', 'show')->name('orders.show');
+    Route::get('/showUrlPay/{id}', 'showUrlPay')->name('order.showUrlPay');
+    Route::post('/ordersended', 'ordersended')->name('order.sended');
+});
 
-Route::get('/installation_system_full_30062020', [App\Http\Controllers\InstallController::class, 'index'])->name('install');
-Route::get('/emailshowtest/{codeunique}', [App\Http\Controllers\InstallController::class, 'emailshowtest'])->name('emailshowtest');
-Route::get('/emailsendtest/{codeunique}', [App\Http\Controllers\InstallController::class, 'sendEmailCheckOut'])->name('emailsendtest');
+Route::controller(App\Http\Controllers\InstallController::class)->group(function () {
+    Route::get('/installation_system_full_30062020', 'index')->name('install');
+    Route::get('/emailshowtest/{codeunique}', 'emailshowtest')->name('emailshowtest');
+    Route::get('/emailsendtest/{codeunique}', 'sendEmailCheckOut')->name('emailsendtest');
+});

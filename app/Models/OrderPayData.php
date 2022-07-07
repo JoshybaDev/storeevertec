@@ -12,9 +12,9 @@ class OrderPayData extends Model
         'order_id',
         'process_url',
         'request_id',
-        'menssage_error',
+        'message_error',
         'status_pay',
-        'status_mesage',
+        'status_message',
         'status_date'
     ];     
 }

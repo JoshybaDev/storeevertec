@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->text('proccess_url')->nullable();
             $table->string('request_id',30)->nullable();
-            $table->string('menssage_error',30)->nullable();
+            $table->string('message_error',30)->nullable();
             $table->string('status_pay',30)->nullable();
-            $table->string('status_mesage',250)->nullable();
+            $table->string('status_message',250)->nullable();
             $table->datetime('status_date')->nullable();
             $table->timestamps();
         });

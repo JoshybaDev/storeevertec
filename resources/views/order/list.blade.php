@@ -1,7 +1,7 @@
 @extends('layoutsadmin.app')
 @section('title', 'My Orders')
 @section('css')
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 @endsection
 @section('content')
     <h1 class="h3 mb-2 text-gray-800">My Orders</h1>
@@ -28,11 +28,13 @@
                         @php
                             $color='';
                             if ($order['status'] == 'CREATED') {
-                                $color='btn-primary';
+                                $color='btn-warning';
                             } elseif ($order['status'] == 'REJECTED') {
                                 $color='btn-danger';
                             } elseif ($order['status'] == 'PAYED') {
                                 $color='btn-success';
+                            } elseif ($order['status'] == 'SENDED') {
+                                $color='btn-primary';
                             }
                         @endphp
                         <tr>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('package_id')->references('id')->on('packages');
             $table->decimal('coust',18,2);
             $table->text('responseapi')->nullable();
+            $table->text('tracking_number',50)->nullable();
             $table->timestamps();
         });
     }

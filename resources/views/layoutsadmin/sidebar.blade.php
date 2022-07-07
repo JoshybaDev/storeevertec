@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('store')}}">
         <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }} Admin</div>
     </a>
 
@@ -24,18 +24,12 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {{Route::currentRouteName()=='orders'?'active':''}}">
         <a class="nav-link" href="{{route('orders')}}">
             <i class="fas fa-fw fa-store"></i>
             <span>My orders</span>
         </a>
     </li>
-
-
-
-
-
-
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

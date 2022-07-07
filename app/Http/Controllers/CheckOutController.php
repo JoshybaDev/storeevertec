@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Helpers\Helper;
 use App\Models\Package;
 use App\Models\OrderDetail;
+use App\Models\OrderAddress;
+use App\Models\OrderPackage;
 use Illuminate\Http\Request;
 use App\Services\CartServices;
 use App\Services\UserServices;
@@ -254,7 +256,7 @@ class CheckOutController extends Controller
      */
     public function show($codeunique)
     {
-        $order = Order::where('codebuy', '=', $codeunique)->select('id', 'total', 'taxes', 'shipping', 'shipping_discount', 'status')->get();
+        $order = Order::where('codebuy', '=', $codeunique)->get();
         if (empty($order[0])) {
             return redirect()->route('products')->withErrors(['codeunique' => 'Your Code is Invalid!!']);
         }
@@ -268,7 +270,9 @@ class CheckOutController extends Controller
                 return view('checkout.payed',compact('items', 'total', 'user', 'codeunique', 'order'));
                 break;
             case 'SENDED':
-                return view('checkout.sended',compact('items', 'total', 'user', 'codeunique', 'order'));
+                $orderAddress = OrderAddress::where('order_id', '=', $orderId)->get();
+                $orderPackage = OrderPackage::where('order_id', '=', $orderId)->get();                
+                return view('checkout.sended',compact('items', 'total', 'user', 'codeunique', 'order','orderAddress','orderPackage'));
                 break;
             case 'REJECTED':
             case 'CREATED':
